@@ -100,29 +100,38 @@ export default function BrowSequence() {
     };
 
     // Resize handler
+    const lastWidth = useRef(0);
+
     useEffect(() => {
         const handleResize = () => {
             if (!canvasRef.current) return;
             const canvas = canvasRef.current;
-            const dpr = window.devicePixelRatio || 1;
 
-            // Use client dims
+            // Cap DPR to 2 for performance on high-res mobile
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
             const { clientWidth, clientHeight } = canvas;
 
-            canvas.width = clientWidth * dpr;
-            canvas.height = clientHeight * dpr;
+            // Only resize buffer if width changes (orientation) or initial load
+            // This prevents canvas clearing when address bar shrinks/grows on mobile vertical scroll
+            if (Math.abs(clientWidth - lastWidth.current) > 10) {
+                lastWidth.current = clientWidth;
 
-            // Re-render current frame
-            const currentProg = smoothProgress.get();
-            const index = Math.round(currentProg * (FRAME_COUNT - 1));
-            const clampedIndex = Math.max(0, Math.min(FRAME_COUNT - 1, index));
-            renderFrame(clampedIndex);
+                canvas.width = clientWidth * dpr;
+                canvas.height = clientHeight * dpr;
+
+                // Re-render current frame
+                const currentProg = smoothProgress.get();
+                const index = Math.round(currentProg * (FRAME_COUNT - 1));
+                const clampedIndex = Math.max(0, Math.min(FRAME_COUNT - 1, index));
+                renderFrame(clampedIndex);
+            }
         };
 
         window.addEventListener("resize", handleResize);
         handleResize(); // Initial
         return () => window.removeEventListener("resize", handleResize);
-    }, [images, smoothProgress]); // Re-bind if images change to ensure content renders
+    }, [images, smoothProgress]); // Re-bind if images change
 
     // Animation Loop
     useMotionValueEvent(smoothProgress, "change", (latest) => {
