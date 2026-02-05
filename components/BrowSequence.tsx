@@ -128,7 +128,7 @@ export default function BrowSequence() {
     useMotionValueEvent(smoothProgress, "change", (latest) => {
         const index = Math.round(latest * (FRAME_COUNT - 1));
         const clampedIndex = Math.max(0, Math.min(FRAME_COUNT - 1, index));
-        requestAnimationFrame(() => renderFrame(clampedIndex));
+        renderFrame(clampedIndex);
     });
 
     // Initial draw
@@ -143,7 +143,7 @@ export default function BrowSequence() {
     return (
         <div
             ref={wrapperRef}
-            className={`relative ${isLoading ? "h-screen overflow-hidden" : "h-[400vh]"}`}
+            className={`relative ${isLoading ? "h-[100dvh] overflow-hidden" : "h-[300vh] md:h-[400vh]"}`}
         >
             {isLoading ? (
                 <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#F8F2EC]">
@@ -158,12 +158,11 @@ export default function BrowSequence() {
                     </span>
                 </div>
             ) : (
-                <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#F8F2EC]">
+                <div className="sticky top-0 h-[100dvh] w-full overflow-hidden bg-[#F8F2EC]">
                     <canvas
                         ref={canvasRef}
                         className="w-full h-full object-contain"
                     />
-
                 </div>
             )}
         </div>
