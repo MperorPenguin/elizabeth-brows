@@ -2,7 +2,7 @@
 
 import { useScroll, useSpring, useTransform, motion, useMotionValueEvent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import BrowOverlays from "./BrowOverlays";
+
 
 const FRAME_COUNT = 193;
 const FRAME_PATH = (i: number) =>
@@ -57,7 +57,7 @@ export default function BrowSequence() {
     // Canvas drawing
     const renderFrame = (index: number) => {
         const canvas = canvasRef.current;
-        if (!canvas || !images[index] || !images[index].complete) return;
+        if (!canvas || !images[index] || !images[index].complete || !(images[index].naturalWidth > 0)) return;
 
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
@@ -81,12 +81,15 @@ export default function BrowSequence() {
         const iw = img.naturalWidth;
         const ih = img.naturalHeight;
 
-        // Scale to CONTAIN
-        const scale = Math.min(cw / iw, ch / ih);
+        // Scale to COVER (fills screen, crops edges if needed, maximizes quality feel)
+        const scale = Math.max(cw / iw, ch / ih);
         const w = iw * scale;
         const h = ih * scale;
         const x = (cw - w) / 2;
         const y = (ch - h) / 2;
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
 
         ctx.clearRect(0, 0, cw, ch);
         // Fill background just in case
@@ -160,7 +163,7 @@ export default function BrowSequence() {
                         ref={canvasRef}
                         className="w-full h-full object-contain"
                     />
-                    <BrowOverlays scrollYProgress={scrollYProgress} />
+
                 </div>
             )}
         </div>

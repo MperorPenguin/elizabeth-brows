@@ -1,9 +1,12 @@
 import BrowReveal from "@/components/BrowReveal";
 import Hero from "@/components/Hero";
+import LoadingScreen from "@/components/LoadingScreen";
+import Socials from "@/components/Socials";
 
 export default function Home() {
   return (
     <main className="bg-[#F8F2EC] min-h-screen">
+      <LoadingScreen />
       {/* Hero Section */}
       <Hero />
 
@@ -75,6 +78,9 @@ export default function Home() {
           Book Appointment
         </button>
       </section>
+
+      {/* Socials Section */}
+      <Socials />
 
       {/* Footer */}
       <footer className="py-12 bg-[#F8F2EC] border-t border-[#1B1B1B]/5 text-center">

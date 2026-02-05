@@ -2,7 +2,7 @@
 
 import { useScroll, useSpring, useTransform, motion, useMotionValueEvent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import BrowOverlays from "./BrowOverlays";
+
 
 export default function BrowVideoFallback() {
     const wrapperRef = useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ export default function BrowVideoFallback() {
                     style={{ objectFit: "contain" }}
                 />
 
-                <BrowOverlays scrollYProgress={scrollYProgress} />
+
 
             </div>
         </div>

@@ -12,10 +12,10 @@ export default function Hero() {
                 className="text-center z-10"
             >
                 <h1 className="text-6xl md:text-8xl font-light text-[#1B1B1B] mb-4 tracking-tighter">
-                    Sculpt By Elizabeth
+                    SCULPT
                 </h1>
                 <p className="text-[#1B1B1B]/60 text-xl tracking-widest uppercase">
-                    Est. London
+                    By Elizabeth
                 </p>
             </motion.div>
         </section>
