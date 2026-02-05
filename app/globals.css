@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F8F2EC;
+  --foreground: #1B1B1B;
+  --accent: #A28660;
+  --accent-soft: #D1BDA2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Hide scrollbar for cleaner look if requested, but keep for now */
